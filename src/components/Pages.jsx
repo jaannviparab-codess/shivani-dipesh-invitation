@@ -21,6 +21,8 @@ export function Page({ id, inView, className = '', children }) {
 // The browser's "Translate to English" renders श्रीकृष्ण as "Srikrishna". In English
 // mode that one word is shown as a fixed, untranslated "Shrikrishna" instead; the
 // Marathi text itself is never changed. (Same idea as the interface labels in uiText.js.)
+// The translator trims the spaces of the text nodes next to the untranslated span
+// ("Mr.ShrikrishnaJanardan"), so the word carries its own spaces inside the span.
 const KRISHNA_MR = 'श्रीकृष्ण';
 const KRISHNA_EN = 'Shrikrishna';
 
@@ -28,7 +30,7 @@ function withShrikrishna(text, english) {
   if (!english || !text.includes(KRISHNA_MR)) return text;
   return text.split(KRISHNA_MR).map((part, i) => (
     <React.Fragment key={i}>
-      {i > 0 ? <span translate="no">{KRISHNA_EN}</span> : null}
+      {i > 0 ? <span translate="no">{` ${KRISHNA_EN} `}</span> : null}
       {part}
     </React.Fragment>
   ));
