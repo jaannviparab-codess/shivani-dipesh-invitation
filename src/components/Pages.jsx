@@ -18,6 +18,22 @@ export function Page({ id, inView, className = '', children }) {
   );
 }
 
+// The browser's "Translate to English" renders श्रीकृष्ण as "Srikrishna". In English
+// mode that one word is shown as a fixed, untranslated "Shrikrishna" instead; the
+// Marathi text itself is never changed. (Same idea as the interface labels in uiText.js.)
+const KRISHNA_MR = 'श्रीकृष्ण';
+const KRISHNA_EN = 'Shrikrishna';
+
+function withShrikrishna(text, english) {
+  if (!english || !text.includes(KRISHNA_MR)) return text;
+  return text.split(KRISHNA_MR).map((part, i) => (
+    <React.Fragment key={i}>
+      {i > 0 ? <span translate="no">{KRISHNA_EN}</span> : null}
+      {part}
+    </React.Fragment>
+  ));
+}
+
 /** Splits a sentence into words so each can be revealed in turn. */
 function Words({ text, start = 0.8, step = 0.07 }) {
   return text.split(' ').map((w, i, arr) => (
@@ -91,6 +107,7 @@ export function PageIntro({ inView }) {
 
 /* ═════════════════════════ PAGE 2 — bride & groom ═════════════════════════ */
 export function PageNames({ inView }) {
+  const { english, k: uiKey } = useUi();
   return (
     <Page id="p2" inView={inView} className="p-names">
       <PageFrame corners={['tr', 'bl']} />
@@ -100,7 +117,9 @@ export function PageNames({ inView }) {
         <section className="person reveal" style={{ '--d': '0.7s' }}>
           <p className="hon">चि. सौ. कां.</p>
           <h2 className="name gold-text wipe" style={{ '--d': '0.9s' }}>शिवानी</h2>
-          <p className="parents">सौ. श्रद्धा आणि श्री. श्रीकृष्ण जनार्दन पेडणेकर यांची कन्या</p>
+          <p className="parents" key={uiKey}>
+            {withShrikrishna('सौ. श्रद्धा आणि श्री. श्रीकृष्ण जनार्दन पेडणेकर यांची कन्या', english)}
+          </p>
         </section>
         <Rings className="reveal" />
         <section className="person reveal" style={{ '--d': '1.5s' }}>
@@ -266,6 +285,7 @@ export function PageMessage({ inView }) {
 
 /* ═════════════════════════ PAGE 7 — RSVP & closing ═════════════════════════ */
 export function PageRsvp({ inView }) {
+  const { english, k: uiKey } = useUi();
   return (
     <Page id="p7" inView={inView} className="p-rsvp">
       <PageFrame />
@@ -275,7 +295,7 @@ export function PageRsvp({ inView }) {
         </h2>
         <Divider className="reveal" />
         <div className="contact reveal" style={{ '--d': '1.2s' }}>
-          <p className="c-name">{RSVP_NAME}</p>
+          <p className="c-name" key={uiKey}>{withShrikrishna(RSVP_NAME, english)}</p>
           <a className="c-phone" href={`tel:${RSVP_PHONE_TEL}`} aria-label={`फोन करा ${RSVP_PHONE_DISPLAY}`}>
             {RSVP_PHONE_DISPLAY}
           </a>
