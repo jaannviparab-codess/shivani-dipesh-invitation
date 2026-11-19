@@ -1,0 +1,207 @@
+/* ───────────── Design tokens ───────────── */
+:root {
+  /* deep traditional green */
+  --g950: #031209;
+  --g900: #062418;
+  --g800: #0a3322;
+  --g700: #0f4a31;
+  --g600: #166a46;
+  /* antique gold */
+  --gold-100: #fff3c2;
+  --gold-300: #f1d98c;
+  --gold-400: #e6c05a;
+  --gold-500: #c9a043;
+  --gold-600: #a67c2a;
+  --gold-700: #7d5a1a;
+  /* warm ivory paper */
+  --ivory-50: #fffaf0;
+  --ivory-100: #fbf4e1;
+  --ivory-200: #f4e8c9;
+  --ivory-300: #e8d8ae;
+  /* ink on paper (contrast 12:1 on ivory) */
+  --ink: #0b3321;
+  --ink-soft: #1d5a3d;
+  /* floral accents, taken from the invitation's flowers */
+  --marigold: #f29a1f;
+  --saffron: #e8741b;
+  --rose: #c4273f;
+  --maroon: #7a1329;
+
+  --f-body: 'Noto Serif Devanagari', 'Tiro Devanagari Marathi', 'Nirmala UI', 'Mangal', 'Kohinoor Devanagari', serif;
+  --f-display: 'Yatra One', 'Tiro Devanagari Marathi', 'Noto Serif Devanagari', 'Nirmala UI', serif;
+  /* Yatra One draws the श्र conjunct with a detached tail, so every heading containing
+     "श्री" uses this bold Noto Serif Devanagari stack, which shapes it correctly. */
+  --f-shri: 'Noto Serif Devanagari', 'Tiro Devanagari Marathi', 'Nirmala UI', 'Mangal', serif;
+  --f-name: 'Tiro Devanagari Marathi', 'Yatra One', 'Noto Serif Devanagari', 'Nirmala UI', serif;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --noise-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .33 0 0 0 0 .14 0 0 0 .5 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --noise-leather: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 -.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --paper: radial-gradient(120% 90% at 50% 38%, #fffaf0 0%, #f9efd5 55%, #eddcb3 100%);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  color-scheme: dark;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--g950);
+  color: var(--ivory-100);
+  font-family: var(--f-body);
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+.sr {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-300);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ───────────── metallic text ───────────── */
+/* antique gold, tuned to stay legible on ivory paper */
+.gold-text {
+  background: linear-gradient(180deg, #7a520d 0%, #b8862a 26%, #e3b94f 46%, #a9781c 66%, #6b4609 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0.04em 0 rgba(255, 244, 200, 0.55));
+}
+
+/* bright gold, embossed, for the dark-green cover */
+.gold-emboss {
+  background: linear-gradient(180deg, #fff6cf 0%, #f2d67e 30%, #c9992f 52%, #f6dc86 74%, #a77a22 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0.045em 0 rgba(0, 0, 0, 0.65)) drop-shadow(0 0 0.5em rgba(240, 200, 90, 0.22));
+}
+
+/* ───────────── golden button ───────────── */
+.btn-gold {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 48px;
+  padding: 0.7em 1.7em;
+  border: 1px solid #fff0b0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fbe9a2 0%, #e2b94f 46%, #b98a2c 54%, #ecca6a 100%);
+  color: #0b3321;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.38),
+    0 0 0 3px rgba(230, 192, 90, 0.18),
+    inset 0 1px 0 #fffbe0,
+    inset 0 -2px 0 rgba(122, 82, 13, 0.45);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -60%;
+  width: 40%;
+  transform: skewX(-20deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  animation: btnShine 3.8s ease-in-out infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.42),
+    0 0 0 4px rgba(230, 192, 90, 0.3),
+    inset 0 1px 0 #fffbe0,
+    inset 0 -2px 0 rgba(122, 82, 13, 0.45);
+}
+
+.btn-gold:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+.btn-gold:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.btn-gold .ico {
+  flex: none;
+}
+
+@keyframes btnShine {
+  0%,
+  55% {
+    left: -60%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
