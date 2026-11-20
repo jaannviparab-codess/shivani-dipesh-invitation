@@ -127,7 +127,7 @@ export function PageNames({ inView }) {
         <section className="person reveal" style={{ '--d': '1.5s' }}>
           <p className="hon">चि.</p>
           <h2 className="name gold-text wipe" style={{ '--d': '1.7s' }}>दिपेश</h2>
-          <p className="parents">सौ. सुचिता आणि श्री. नागेश विष्णू मालंदकर यांचे सुपुत्र</p>
+          <p className="parents">सौ. सुचिता आणि श्री. नागेश विष्णू मालंडकर यांचे सुपुत्र</p>
         </section>
       </div>
     </Page>
